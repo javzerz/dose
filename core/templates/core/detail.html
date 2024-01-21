@@ -1,0 +1,123 @@
+{% load static %}
+{% block title %}{% endblock %}
+<head>
+	<link href="{% static 'core/css/webflow_bs.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</head>
+
+{% block content %}
+<h5>{{ products.name }}</h5>
+
+<br>
+
+<form id="myForm" style="width: 100%;">
+	<div>Amount: <span id="input_val"></span> MG</div>
+    <p class="range-field">
+        <input type="range" id="myRange" min="0" />
+        
+    </p>
+    <input type="number" id="decimalInput" placeholder="Enter Manually">
+</form>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-secondary" value="{{products.id}}" id="add-cart" type="submit"> Update Cart
+	</button>
+</form>
+  <ul class="collapsible">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">expand_more</i>Description</div>
+      <div class="collapsible-body"><span>{{ products.description }}</span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">expand_more</i>Benefits and Interactions</div>
+      <div class="collapsible-body"><span>{{ products.benefits }}</span></div>
+    </li>
+  </ul>
+
+<p style="font-size: 16px;  font-weight: bold;">Serving Size: {{ products.servings }}</p>
+<p style="font-size: 16px;  font-weight: bold;">Price: {{ products.price }}</p>
+
+<script>
+    var slider = document.getElementById("myRange");
+    var inputVal = document.getElementById("input_val");
+    var decimalInput = document.getElementById("decimalInput");
+    var form = document.getElementById("myForm");
+
+    // Display the default slider value
+    inputVal.innerHTML = slider.value;
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function() {
+        inputVal.innerHTML = this.value;
+    };
+
+    // Handle manual input from the user
+    decimalInput.addEventListener("input", function() {
+        // Set the range value to the input value
+        slider.value = decimalInput.value;
+        inputVal.innerHTML = decimalInput.value;
+    });
+
+    // Calculate the step dynamically based on {{ products.servings }} times 2
+    var step = Math.round({{ products.servings }} * 0.5);
+
+    // Set the step attribute of the range input
+    slider.step = step;
+    slider.max = step * 10;
+
+$(document).on('click', '#add-cart', function (e) {
+    e.preventDefault();
+    var product_id = $('#add-cart').val();
+    var product_qty = slider.value;  
+    
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart_add_or_update' %}',
+        data: {
+            products_id: product_id,
+            product_qty: product_qty,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function (json) {
+        	
+            console.log('Success! Received JSON:', json);
+            var cartQuantityElement = document.getElementById('cart_quantity');
+            parent.window.modal.style.display = "none";
+            parent.window.location.reload();
+            if (cartQuantityElement) {
+                cartQuantityElement.textContent = json.qty;
+
+            } 
+            else {
+                console.error("Element with ID 'cart_quantity' not found.");
+            }
+        },
+        error: function (xhr, errmsg, err) {
+            console.error('Error:', errmsg);
+        }
+    });
+});
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+        
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

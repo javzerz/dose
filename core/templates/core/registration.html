@@ -1,0 +1,37 @@
+{% extends 'core/head.html' %}
+{% load static %}
+
+{% block content %}
+<body id="registration">
+
+<form action= "" method ="post" enctype="multipart/form-data">
+  <div class = "container col-md-6" style="background-color:rgba(5,2,0,0.8);">
+    <div style="margin-top:10%;">
+      <br>
+    </div>
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="form-group">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-10">
+          <span class="text-white small">{{ field.errors|striptags }}</span>
+          {{ field }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <br>
+      <div class="row align-items-center justify-content-center">
+        <input class="button-primary w-button" type="submit" value="Register" role="button"/>
+      </div>
+      </div>
+        <br>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+</html>
+{% endblock %}

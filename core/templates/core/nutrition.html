@@ -1,0 +1,19 @@
+{% load static %}
+
+	{% block content %}
+<div class="container">	
+<h4 style="font-family: Franklin Gothic Heavy, Arial, sans-serif;">Nutrition Facts</h4>
+<div style="font-family: Helvetica, Arial, sans-serif;">
+	<p>1 serving per container</p>
+	<p><strong>Amount per serving</strong></p>
+	<ul class="list-group list-group-flush">
+    <li class="list-group-item" style="font-family: Franklin Gothic Heavy, Arial, sans-serif;">Calories: {{ total_nutrition.calories }}</li>
+    <li class="list-group-item"><strong>Total Fat: {{ total_nutrition.total_fat }}g</strong></li>
+    <li class="list-group-item">Cholesterol: {{ total_nutrition.cholesterol }}mg</li>
+    <li class="list-group-item">Dietary Fiber: {{ total_nutrition.dietary_fiber }}g</li>
+    <li class="list-group-item">Sugar: {{ total_nutrition.sugar }}g</li>
+    <li class="list-group-item"><strong>Protein: {{ total_nutrition.protein }}g</strong></li>
+	</ul>
+</div>
+</div>
+	{% endblock%}

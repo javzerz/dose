@@ -1,0 +1,68 @@
+{% extends 'core/head.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+{% block title %} <title>Home</title>{% endblock %} 
+{% block content %} 
+  <section class="hero-heading-left">
+    <div class="container">
+      <div class="hero-wrapper">
+        <div class="hero-split">
+          <h1>Title copy goes here</h1>
+          <p class="margin-bottom-24px">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros. Quisqrtue quis euismod lorem. Etiam sodales ac felis id interdum.</p>
+          <a href="/store" class="button-primary w-button">Get Started</a>
+        </div>
+     <div class="hero-split">
+    <div class="video-container">
+        <video autoplay muted loop class="responsive-video">
+            <source src="{% static 'videos/ski_vid.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+      </div>
+    </div>
+  </section>
+  <section class="footer-subscribe">
+    <div class="container">
+      <div class="footer-form-two w-form">
+        <form id="wf-form-Footer-Form-Two" name="wf-form-Footer-Form-Two" data-name="Footer Form Two" method="get" class="footer-form-container-two" data-wf-page-id="659492ea1c06df49072b2bb0" data-wf-element-id="611778db-da14-fae3-553d-fd301c862c50">
+          <div class="footer-form-title">Subscribe Newsletters</div>
+          <div class="footer-form-block-two"><input class="footer-form-input w-input" maxlength="256" name="Footer-Email-Two" data-name="Footer Email Two" aria-label="Enter your email" placeholder="Enter your email" type="email" id="Footer-Email-Two" required=""><input type="submit" data-wait="Please wait..." class="button-primary footer-form-button w-button" value="Subscribe Now"></div>
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+      <div class="footer-wrapper-three">
+        <div class="footer-block-three">
+          <a href="#" class="footer-link-three">About us</a>
+          <a href="#" class="footer-link-three">Features</a>
+          <a href="#" class="footer-link-three">User Example</a>
+          <a href="#" class="footer-link-three">Pricing</a>
+          <a href="#" class="footer-link-three">Resources</a>
+        </div>
+        <div class="footer-social-block-three">
+          <a href="#" class="footer-social-link-three w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a705912aaeb_facebook%20big%20filled.svg" loading="lazy" alt=""></a>
+          <a href="#" class="footer-social-link-three w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124ab37a12aaf0_twitter%20big.svg" loading="lazy" alt=""></a>
+          <a href="#" class="footer-social-link-three w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a61f512aaed_instagram%20big.svg" loading="lazy" alt=""></a>
+          <a href="#" class="footer-social-link-three w-inline-block"><img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a717f12aaea_youtube%20small.svg" loading="lazy" alt=""></a>
+        </div>
+      </div>
+      <div class="footer-divider-two"></div>
+      <div class="footer-bottom">
+        <div class="footer-copyright">© 2022 Company name. All rights reserved</div>
+        <div class="footer-legal-block">
+          <a href="#" class="footer-legal-link">Terms Of Use</a>
+          <a href="#" class="footer-legal-link">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+
+</html>

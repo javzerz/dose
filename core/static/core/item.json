@@ -1,0 +1,60 @@
+{
+    "name": "BUY THESE",
+    "children": [
+        {
+            "name": "Protein",
+            "children": [
+                {
+                    "name": "Meat Based PP",
+                    "url": "/product_list/5/"
+                },
+                {
+                    "name": "Vegan PP",
+                    "url": "/product_list/1/"
+                },
+                {
+                    "name": "Whey PP",
+                    "url": "/product_list/2/"
+                }
+            ]
+        },
+        {
+            "name": "Supplements",
+            "children": [
+                {
+                    "name": "Beta-Alanine",
+                    "url": "/product_list/10/"
+                },
+                {
+                    "name": "Creatine",
+                    "url": "/product_list/6/"
+                }
+            ]
+        },
+        {
+            "name": "Vitamins",
+            "children": [
+                {
+                    "name": "Magnesium",
+                    "url": "/product_list/8/"
+                },
+                {
+                    "name": "Vitamin C",
+                    "url": "/product_list/3/"
+                },
+                {
+                    "name": "Vitamin D",
+                    "url": "/product_list/4/"
+                },
+                {
+                    "name": "Vitamin E",
+                    "url": "/product_list/7/"
+                },
+                {
+                    "name": "Zinc",
+                    "url": "/product_list/9/"
+                }
+            ]
+        }
+    ]
+}

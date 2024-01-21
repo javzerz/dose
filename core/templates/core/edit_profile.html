@@ -1,0 +1,50 @@
+{% extends "core/head.html" %}
+{% load static %}
+
+{% block content %}
+<form action="" method ="post" enctype="multipart/form-data">
+  <div class = "container col-md-6" style="background-color:rgba(5,2,0,0.8);">
+    <div style="margin-top:10%;">
+      <br>
+    </div>
+    {% csrf_token %}
+    <div class="form-group">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-10">
+        <span class="text-white small">{{ field.errors|striptags }}</span>
+        <span class="text-white small">{{ form1.username.label|linebreaks|striptags }}</span>
+        {{ form1.username }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-md-10">
+        <span class="text-white small">{{ field.errors|striptags }}</span>
+        <span class="text-white small">{{ form1.email.label|linebreaks|striptags }}</span>
+          {{ form1.email }}
+        </div>
+      </div>
+    </div>
+      {% csrf_token %}
+      {% for field in form2 %}
+      <div class="form-group">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-10">
+          <span class="text-white small">{{ field.errors|striptags }}</span>
+          <span class="text-white small">{{ field.label|linebreaks|striptags }}</span>
+          {{ field }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="row align-items-center justify-content-center">
+      <div class="col-md-10">
+        <input class="btn btn-outline-success btn-block" type="submit" value="Submit" role="button"/>
+      </div>
+      </div>
+<br><br>
+    </div>
+</form>
+</div>
+{% endblock %}

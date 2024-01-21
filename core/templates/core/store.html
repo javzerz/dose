@@ -1,0 +1,386 @@
+{% extends 'core/head.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<br>
+<div  class="container">
+<h3>Create your Dose</h3>
+<br>
+<div class="row align-items-center justify-content-center" >
+<h6>Step 1: Choose your ingredients</h6>
+<p>Open the categories to check off which products you want in your recipe</p>
+</div>
+{% for category in categories %}
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{ category }}">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ category }}" aria-expanded="false" aria-controls="{{ category }}">
+        {{ category.name }}
+      </button>
+    </h2>
+    <div id="{{ category }}" class="accordion-collapse collapse" aria-labelledby="heading{{ category }}" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <ul class="list-group">
+          {% for product in category.products.all %}
+              <li class="list-group-item">
+                  <!-- Flex container with space-between utility -->
+                  <div class="d-flex justify-content-between align-items-center">
+                      <div class="form-check form-switch">
+                          <input class="form-check-input product-checkbox" type="checkbox" id="{{ product.id }}"data-product-id="{{ product.id }}" data-product-name="{{ product.name }}" data-product-servings="{{ product.servings }}" data-product-serving-info="{{ product.serving_info }}" + 
+                          {% if cart_products %}
+                              {% if product in cart_products %}checked
+                              {% else %} 
+                              {% endif %}
+                          {% endif %}>
+                          <label class="form-check-label" for="{{ product.id }}">{{ product.name }}</label>
+                      </div>
+                      <button type="button" class="btn btn-primary open-modal" data-bs-toggle="modal" data-bs-target="#myModal" data-product-id="{{ product.id }}" data-product-description="{{ product.description }}">
+                          More Info
+                      </button>
+                  </div>             
+              </li>             
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endfor %}
+<br>
+<div class="row align-items-center justify-content-center" >
+<h6>Step 2: Choose amounts</h6>
+<p>Select the number of servings and check serving info if you want to change from the default of 1 serving</p>
+</div>
+<form id="update-cart-form" method="post" action="{% url 'cart_add_or_update_multiple' %}">
+    {% csrf_token %}
+    <ul class="list-group" id="selected-products">
+        <!-- Selected products will be dynamically added here -->
+    </ul>
+    <div class="row align-items-center justify-content-center">
+    <button type="submit" id="update-cart-button" class="btn btn-dark update-cart" style="display: none;">Update</button>
+  </div>
+</form>
+
+
+  <!-- modal structure (More Info) -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Product Description</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Product description will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal structure (Serving Info) -->
+<div class="modal fade" id="myModal_2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Serving Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Product description will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<!-- cards -->
+<div class="row align-items-center justify-content-center" >
+<h6>Step 3: Finish the dose</h6>
+<p>Bag size is pre-determined by the amounts chosen above. Check the final result</p>
+</div>
+<div class="row justify-content-center justify-content-center">
+
+
+<div class="card col-12 col-md-4" style="">
+  <div class="card-body">
+    <h4 class="card-title" style="font-family: Franklin Gothic Heavy, Arial, sans-serif;">Color</h4>
+<div id="carouselExampleIndicators" class="carousel slide" data-interval="false">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'core/img/bag_black_2.png' %}" class="d-block w-100" alt="...">
+        <div class="carousel-caption">
+        <h5>Black</h5>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'core/img/bag_bronze.png' %}" class="d-block w-100" alt="...">
+      <div class="carousel-caption">
+      <h5>Bronze</h5>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'core/img/bag_white.png' %}" class="d-block w-100" alt="...">
+      <div class="carousel-caption">
+      <h5 style="color: black">White</h5>
+    </div>
+    </div>    
+    <div class="carousel-item">
+      <img src="{% static 'core/img/bag_blue.png' %}" class="d-block w-100" alt="...">
+      <div class="carousel-caption">
+      <h5>Blue</h5>
+      </div>
+    </div>
+        <div class="carousel-item">
+      <img src="{% static 'core/img/bag_green.png' %}" class="d-block w-100" alt="...">
+      <div class="carousel-caption">
+      <h5>Green</h5>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<br>
+  <p><strong>Dimensions: X</strong></p>
+  <p>Easily differentiate your multiple doses.</p>
+  </div>
+</div>
+
+<!-- card 2 -->
+<div class="card col-12 col-md-4" style="">
+  <div class="card-body">
+    {% include 'core/nutrition.html' %}
+    <br>
+    <p><strong>Total Volume: {{ total_quantity }} Grams</strong></p>
+
+  </div>
+</div>
+
+<!-- card 3 -->
+<div class="card col-12 col-md-4" style="">
+  <div class="card-body">
+    <h4 class="card-title" style="font-family: Franklin Gothic Heavy, Arial, sans-serif;">Fill</h4>
+
+    <div class="progress" style="height: 80px;">
+    {% if cart_products %}
+        {% for product in cart_products %}
+            <div class="progress-bar" role="progressbar" style="width:
+            {% for key, value in percent_bag.items %}{% if key == product.id|slugify %}
+                    {{ value }} {% endif %}
+            {% endfor %}; background-color: {{ product.color }}" aria-valuenow="{% for key, value in quantities.items %}  
+                    {% if key == product.id|slugify %}
+                        {{ value }}
+                    {% endif %}
+                {% endfor %}" aria-valuemin="0" aria-valuemax="{{ volume }}">
+            </div>
+        {% endfor %}           
+    {% else %}
+    <br>
+        <!-- Your cart is empty -->
+    {% endif %}
+</div>
+<ul class="list-group list-group-flush">
+    {% if cart_products %}
+        {% for product in cart_products %}
+        <li class="list-group-item"><i class="bi bi-circle-fill" style="color:{{product.color}};"></i> {{product.name}}</li>
+        {% endfor %}           
+    {% else %}
+    <br>
+    {% endif %}
+<ul>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+</div>
+    <div class="row align-items-center justify-content-center">
+    <a href="/cart" type="submit" id="" class="btn btn-dark">Go to cart</a>
+  </div>
+
+<div id="space-below"><!-- space -->
+</div>
+
+<!-- footer? -->
+
+    <style>
+        #space-below {
+            height: 200px; /* Adjust the height as needed */
+        }
+    </style>
+
+</div><!-- ContainerMain -->
+<!-- End -->
+
+
+<style>
+    #carouselExampleIndicators {
+        width: 75%; /* Adjust width as needed */
+        margin: auto; /* Centers the carousel in the card */
+    }
+
+    .carousel-inner img {
+        height: 300px; /* Adjust height as needed */
+        object-fit: cover; /* Keeps the aspect ratio of images */
+    }
+</style>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Listener for opening the product description modal
+  $('.open-modal').on('click', function () {
+    var description = $(this).data('product-description');
+    $('#myModal .modal-body').text(description);
+  });
+
+$(document).ready(function() {
+});
+
+ $('#selected-products').on('click', '.open-serving-modal', function() {
+    var servingInfo = $(this).data('product-serving-info');
+    var Servings = $(this).data('product-servings');
+     var htmlContent = '<p><strong>Serving Size: ' + Servings + 'Mg </strong></p><p>' + servingInfo + '</p>';
+
+    
+    $('#myModal_2 .modal-body').html(htmlContent);
+
+  });
+
+function updateSelectedProductsList() {
+  var selectedProductIds = $('.product-checkbox:checked').map(function() {
+    return $(this).data('product-id');
+  }).get();
+
+
+$('#update-cart-form').on('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    var formData = {}; // Object to hold form data
+    var csrftoken = $('[name=csrfmiddlewaretoken]').val();
+    formData['csrfmiddlewaretoken'] = csrftoken;
+    var index = 0;
+
+    // Iterate over selected products to populate formData
+    $('.product-checkbox:checked').each(function() {
+      var productId = $(this).data('product-id');
+      var qty = $('select[name="product_qty_' + index + '"]').val();
+      
+      formData['product_id_' + index] = productId;
+      formData['product_qty_' + index] = qty;
+      index++;
+    });
+
+    // AJAX request
+    $.ajax({
+      url: $(this).attr('action'), // URL from the form's action attribute
+      type: 'POST',
+      data: formData,
+      success: function(response) {
+         location.reload();
+      },
+      error: function(xhr, status, error) {
+        // Handle error (e.g., show an error message)
+      }
+    });
+  });
+
+var cartQuantities = {{ quantities|safe }};
+
+function getCurrentQuantity(productId) {
+    return cartQuantities[productId] || 1; // Default to 1 if the product is not in the cart
+}
+
+
+  if (selectedProductIds.length > 0) {
+    var listItemArray = selectedProductIds.map(function(productId, index) {
+    var productName = getProductById(productId);
+    var productServings = getProductServingsById(productId);
+    var productServingInfo = getProductServingInfoById(productId);
+    var productQuant = getCurrentQuantity(productId);
+
+    
+    return `<li class="list-group-item d-flex justify-content-between align-items-center">
+              <span class="col">${productName}</span> 
+              <select class="form-select col" aria-label="Quantity" name="product_qty_${index}" aria-describedby="button-addon2">
+                <option selected>${productQuant}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select> 
+              <button type="button" data-index="${productId}" class="btn btn-danger delete-item" id="button-addon2"><i class="bi bi-trash3"></i></button>
+              <button type="button" class="btn btn-primary open-serving-modal" data-bs-toggle="modal" data-bs-target="#myModal_2" data-product-id="${productId}"data-product-serving-info="${productServingInfo}" data-product-servings="${productServings}">
+                  Serving Info
+              </button>
+              <input type="hidden" name="product_id_${index}" value="${productId}">
+            </li>`;
+    });
+    $('#update-cart-button').show();
+  } else {
+    $('#selected-products').empty();
+    $('#update-cart-button').hide();
+  }
+
+
+
+function getProductById(productId) {
+  return $('.product-checkbox[data-product-id="' + productId + '"]').data('product-name');
+}
+
+function getProductServingsById(productId) {
+  return $('.product-checkbox[data-product-id="' + productId + '"]').data('product-servings');
+}
+
+function getProductServingInfoById(productId) {
+  return $('.product-checkbox[data-product-id="' + productId + '"]').data('product-serving-info');
+}
+
+
+
+  $('#selected-products').html('<ul class="list-group">' + listItemArray.join('') + '</ul>');
+}
+
+  $('.product-checkbox').on('change', updateSelectedProductsList);
+  updateSelectedProductsList();
+
+
+ });
+
+
+    $(document).on('click','.delete-item', function(e){
+    e.preventDefault();
+    var productid = $(this).data('index');
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'cart_delete' %}',
+      data: {
+        product_id: $(this).data('index'),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        location.reload();
+      },
+      error: function(xhr, errmsg, err){
+            console.log('Error:', errmsg);
+      }
+      }
+    );
+    });
+</script>
+
+{% endblock %}

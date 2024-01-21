@@ -1,0 +1,18 @@
+{% extends 'core/head.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card bg-light" style="margin-top:0%;">
+  <h5 class="card-header bg-white" style="color:black;">Profile</h5>
+  <div class="card-body">
+    <h5 class="card-title">{{ user }}</h5>
+    <p></p>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><strong>Email: </strong>{{ user.email }}</li>
+      <li class="list-group-item"><strong>Phone: </strong>{{ user.userprofile.phone }}</li>
+    </ul>
+    <br>
+    <a href="edit/" class="btn btn-outline-success">Edit Profile <i class="far fa-edit"></i></a>
+  </div>
+</div>
+{% endblock %}

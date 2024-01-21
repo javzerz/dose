@@ -1,0 +1,65 @@
+{% extends 'core/head.html' %}
+{% load static %}
+ 
+{% block content %}    	
+<body id="registration">
+<form action= "" method ="post" enctype="multipart/form-data">
+  <div class = "container col-md-6" style="background-color:rgba(5,2,0,0.8);">
+    <div style="margin-top:10%;">
+      <br>
+    </div>
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="form-group">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-10">
+          <span class="text-white small">{{ field.errors|striptags }}</span>
+          {{ field }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <br>
+<div class="row align-items-center justify-content-center">
+ <form >
+  <input class="button-primary w-button" type="submit" value="login" role="button"/>
+</form>
+</div>
+</div>
+<br>
+</form>
+
+<form action= "" method ="post" enctype="multipart/form-data">
+<div class = "container col-md-6" style="background-color:rgba(5,2,0,0.8);">
+<div class="row align-items-center justify-content-center">
+ <form action="{% url 'registration' %}" method="post" enctype="multipart/form-data">
+  <a href="/registration" class="button-primary w-button">Register</a>
+</form>
+</div>
+</div>
+</form>
+<h6> </h6>
+<form action= "" method ="post" enctype="multipart/form-data">
+<div class = "container col-md-6" style="background-color:rgba(5,2,0,0.8);">
+<div class="row align-items-center justify-content-center">
+ <form action="" method="" enctype="multipart/form-data">
+  <a href="/shop" class="button-primary w-button">Continue as guest</a>
+</form>
+</div>
+</div>
+</form>
+<h6> </h6>
+<form action= "" method ="post" enctype="multipart/form-data">
+<div class = "container col-md-6" style="background-color:rgba(5,2,0,0.8);">
+<div class="row align-items-center justify-content-center">
+ <form action="" method="" enctype="multipart/form-data">
+  <a href="/shop" class="button-primary w-button">Forgot Password</a>
+</form>
+</div>
+</div>
+</form>
+
+
+</body>
+{% endblock %}
+

@@ -1,0 +1,30 @@
+
+
+
+body{
+  font-family: arial;
+  font-size: 16px;
+  margin: 0;
+  background: #fff;
+  color: #000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 100vh;
+  background-color: rgba(53,71,102,0.2);
+}
+
+.container{
+  width: 70%;
+}
+
+h1{
+  font-size: 46px;
+  text-align: center;
+}
+
+#canvas{
+  width: 100%;
+}
+
+

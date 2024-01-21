@@ -1,0 +1,58 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="/">
+      <img src="{% static 'core/img/logoM.png' %}" class="icon-image">
+      Megadose
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link  {% if request.path == '/' %}active{% endif %}" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link  {% if request.path == '/shop/' %}active{% endif %}" href="/shop">ShopDesktop</a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link  {% if request.path == '/store/' %}active{% endif %}" href="/store">ShopMobile</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/cart/' %}active{% endif %}" aria-current="page" href="/cart">
+            Shopping Cart
+            <img src="{% static 'core/img/cart_img.png' %}" alt="Your Icon" class="icon-image">
+            <span class="badge-materialize" id="cart_quantity">{{cart|length}} New</span>
+          </a>
+        </li>
+      </ul>
+    <div class="navbar-item">
+        {% if user.is_authenticated %}
+  <div class="d-flex align-items-center">
+    <a href="/profile" class="chip" style="text-decoration: none;">
+      <img src="{% static 'core/img/user_pic.png' %}" class="icon-image">
+      {{ user.username }}   
+    </a>
+
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="badge-logout">Logout</button>
+    </form>
+  </div>
+      {% else %}
+          <form class="d-flex" role="search">
+            <a href="/login" class="button-primary w-button">Login</a>
+          </form>
+      {% endif %}
+    </div>
+
+    </div>
+  </div>
+</nav>

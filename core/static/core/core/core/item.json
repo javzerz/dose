@@ -1,0 +1,35 @@
+{
+    "name": "BUY THESE",
+    "children": [
+        {
+            "name": "Supplements",
+            "children": [
+                {
+                    "name": "Beef Powder",
+                    "url": "/product_list/5/"
+                },
+                {
+                    "name": "Powder",
+                    "url": "/product_list/2/"
+                },
+                {
+                    "name": "Protein",
+                    "url": "/product_list/1/"
+                }
+            ]
+        },
+        {
+            "name": "Vitamins",
+            "children": [
+                {
+                    "name": "Vitamin C",
+                    "url": "/product_list/3/"
+                },
+                {
+                    "name": "Vitamin D",
+                    "url": "/product_list/4/"
+                }
+            ]
+        }
+    ]
+}

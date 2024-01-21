@@ -1,0 +1,129 @@
+{% extends 'core/head.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<div class="shopping-card-fixed">
+<div class="card" style="width: 22rem;">
+    <div class="card-header">
+        <h4>Shopping Cart</h4>
+    </div>
+    <ul class="list-group list-group-flush" id="cartList">
+        {% if cart_products %}
+            {% for product in cart_products %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="col">{{ product }}</div>
+                    {% for key, value in quantities.items %}  
+                        {% if key == product.id|slugify %}
+                            <div class="col">{{ value }}</div>
+                        {% endif %}
+                    {% endfor %}
+                <span class="badge rounded-pill" style="background-color:{{ product.color }}"> </span><p style="color: white;">__</p>
+                <button type="button" data-index="{{ product.id }}" class="btn btn-outline-danger mb-2 delete-item"><i class="bi bi-trash3"></i></button>
+                </li>
+            {% endfor %}            
+        {% else %}
+        <br>
+            <!-- Your cart is empty -->
+        {% endif %}
+    </ul>
+    <div class="card-footer d-flex justify-content-between align-items-center">
+    <h5>Total: ${{ totals }}</h5>
+    <a href="/cart" class="btn btn-primary">Check Out</a>
+      </div>
+      <br>
+
+<div class="progress" style="height: 20px;">
+    {% if cart_products %}
+        {% for product in cart_products %}
+            <div class="progress-bar" role="progressbar" style="width:
+        {% for key, value in percent_bag.items %}{% if key == product.id|slugify %}
+                {{ value }} {% endif %}
+        {% endfor %}; background-color: {{ product.color }}" aria-valuenow="{% for key, value in quantities.items %}  
+                    {% if key == product.id|slugify %}
+                        {{ value }}
+                    {% endif %}
+                {% endfor %}" aria-valuemin="0" aria-valuemax="{{ volume }}">
+            </div>
+        {% endfor %}            
+    {% else %}
+    <br>
+        <!-- Your cart is empty -->
+    {% endif %}
+</div>
+
+    <br> 
+    <h5>Fill: {{ volume }} grams</h5>
+
+</div>
+</div>
+
+
+<div class="listCart">
+</div>
+    <!-- Modal structure -->
+    <div id="myModal" class="modal">
+      <div class="modal-content" style="width: 60%; height: 80%;">
+        <span class="close">&times;</span>
+        <div id="modalContent" style="width: 100%; height: 100%;">
+          <!-- Modal content goes here -->
+        </div>
+      </div>
+    </div>
+
+<div id="body"><!-- The Whole Jam -->
+</div>
+<div id="space-below"><!-- space -->
+</div>
+
+<!-- footer? -->
+
+
+
+    <style>
+        #space-below {
+            height: 200px; /* Adjust the height as needed */
+        }
+    </style>
+   
+    <script src="{% static 'core/js/arf.js' %}"></script>
+
+    <!-- modal -->
+    <script>
+      // Get the modal
+      var modal = document.getElementById("myModal");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      };
+
+    $(document).on('click','.delete-item', function(e){
+    e.preventDefault();
+    var productid = $(this).data('index');
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'cart_delete' %}',
+      data: {
+        product_id: $(this).data('index'),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        action: 'post'
+      },
+      success: function(json){
+        location.reload();
+      },
+      error: function(xhr, errmsg, err){
+            console.log('Error:', errmsg);
+      }
+      }
+    );
+    });
+</script>
+
+  {% endblock %}
+
